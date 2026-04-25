@@ -302,39 +302,26 @@ elif page == "members":
     </div>
     """, unsafe_allow_html=True)
 
-    # All 8 members — fill remaining 4 with placeholders
-    all_members = [
-        {"name": "MITESH",   "roll": "4022149", "role": "Simulation & Analysis"},
-        {"name": "RUCHIKA",  "roll": "4023170", "role": "Literature Review"},
-        {"name": "RITVIK",   "roll": "4022148", "role": "Circuit Design"},
-        {"name": "JERRY",    "roll": "4022118", "role": "Results & Presentation"},
-        {"name": "MEMBER 5", "roll": "——",      "role": "Report Writing"},
-        {"name": "MEMBER 6", "roll": "——",      "role": "Data Collection"},
-        {"name": "MEMBER 7", "roll": "——",      "role": "FFT Analysis"},
-        {"name": "MEMBER 8", "roll": "——",      "role": "Power Quality Study"},
-    ]
-
-    st.markdown(f"**Total Members: {len(all_members)}**")
+    st.markdown(f"**Total Members: {len(students_df)}**")
     st.markdown("")
 
     col1, col2 = st.columns(2)
-    for i, m in enumerate(all_members):
-        initials = m["name"][:2] if m["name"] != "——" else "??"
+    for i, row in students_df.iterrows():
+        name = str(row["Name"]).strip()
+        roll = str(row["RollNo"]).strip()
+        initials = "".join([p[0] for p in name.split()][:2]).upper()
         card = f"""
         <div class="member-card">
             <div class="member-avatar">{initials}</div>
             <div class="member-info">
-                <h4>{m['name']}</h4>
-                <p>Roll No: {m['roll']} &nbsp;|&nbsp; {m['role']}</p>
+                <h4>{name}</h4>
+                <p>Roll No: {roll}</p>
             </div>
         </div>"""
         if i % 2 == 0:
             col1.markdown(card, unsafe_allow_html=True)
         else:
             col2.markdown(card, unsafe_allow_html=True)
-
-    st.markdown("---")
-    st.info("Update STUDENTS.CSV to fill in the remaining member names and roll numbers.")
 
 
 # ═══════════════════════════════════════════════════════════════
