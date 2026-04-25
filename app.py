@@ -170,6 +170,9 @@ def load_sim_data():
 @st.cache_data
 def load_students():
     df = pd.read_csv("STUDENTS.CSV")
+    df.columns = [c.strip().lower() for c in df.columns]
+    # normalise to 'name' and 'rollno' regardless of original casing
+    df = df.rename(columns={"name": "Name", "rollno": "RollNo"})
     return df
 
 df = load_sim_data()
