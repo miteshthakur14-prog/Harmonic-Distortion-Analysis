@@ -558,17 +558,17 @@ elif page == "working":
     thd_vals = {}
     fig_fft = go.Figure()
     colors_fft = ["#2196F3", "#FF5722", "#FFC107"]
+    fill_colors = ["rgba(33,150,243,0.08)", "rgba(255,87,34,0.08)", "rgba(255,193,7,0.08)"]
 
-    for i, (label, (col_name, color)) in enumerate(sig_map.items()):
+    for i, (label, (col_name, _)) in enumerate(sig_map.items()):
         sig = df[col_name].values
         thd, xf, yf = compute_thd(sig, fs)
         thd_vals[label] = thd
-        # Show up to 2000 Hz for clarity
         f_mask = xf <= 2000
         fig_fft.add_trace(go.Scatter(
             x=xf[f_mask], y=yf[f_mask],
             name=label, line=dict(color=colors_fft[i], width=1.5),
-            fill="tozeroy", fillcolor=color.replace("#", "rgba(") + ",0.08)",
+            fill="tozeroy", fillcolor=fill_colors[i],
             mode="lines",
         ))
 
